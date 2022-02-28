@@ -13,19 +13,19 @@ public class App {
         ChannelExec channel = null;
 
         try {
-            System.out.print("Enter the address of the machine: ");
-            String hostAddress = ConsoleInput.getString();
+            System.out.print("Enter the address of the machine (default: 127.0.0.1): ");
+            String hostAddress = ConsoleInput.getString("127.0.0.1");
 
             System.out.print("Enter the port of the machine: ");
             int hostPort = ConsoleInput.getPositive_Integer();
 
-            System.out.print("Enter username: ");
-            String hostUsername = ConsoleInput.getString();
+            System.out.print("Enter username (default: logmanager): ");
+            String hostUsername = ConsoleInput.getString("logmanager");
 
             session = new JSch().getSession(hostUsername, hostAddress, hostPort);
 
-            System.out.print("Enter password: ");
-            String hostPassword = ConsoleInput.getString();
+            System.out.print("Enter password (default: 1234): ");
+            String hostPassword = ConsoleInput.getString("1234");
             session.setPassword(hostPassword);
 
             session.setConfig("StrictHostKeyChecking", "no");
@@ -40,7 +40,7 @@ public class App {
             channel = (ChannelExec) session.openChannel("exec");
 
             System.out.print("Enter log file name: ");
-            String fileName = ConsoleInput.getString();
+            String fileName = ConsoleInput.getString("");
 
             channel.setCommand("cat /var/log/" + fileName + ".log");
 

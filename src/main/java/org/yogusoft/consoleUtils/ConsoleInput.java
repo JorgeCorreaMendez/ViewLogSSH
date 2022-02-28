@@ -29,7 +29,7 @@ public class ConsoleInput {
         return x;
     }
 
-    public static String getString() {
+    public static String getString(String defaultValue) {
         Scanner leer = new Scanner(System.in);
         boolean err = true;
         String x = "";
@@ -39,8 +39,11 @@ public class ConsoleInput {
                 x = leer.nextLine();
 
                 if (x.equals("")) {
-                    System.out.println("Error, you have entered an empty string");
-                    System.out.println("Please try again: ");
+                    if (defaultValue.isEmpty()) {
+                        System.out.println("Error, you have entered an empty string");
+                        System.out.println("Please try again: ");
+                    } else return defaultValue;
+
                 } else {
                     err = false;
                 }
