@@ -56,4 +56,24 @@ public class ConsoleInput {
 
         return x;
     }
+
+    public static boolean getBoolean() {
+        Scanner read = new Scanner(System.in);
+        boolean err = true;
+        boolean x = false;
+
+        do {
+            try {
+                x = read.nextBoolean();
+                err = false;
+            } catch (InputMismatchException e) {
+                System.out.println("Error, you haven't entered a boolean value");
+                System.out.println("Please try again: ");
+                read.nextLine();
+            }
+        } while (err);
+
+        return x;
+    }
+
 }

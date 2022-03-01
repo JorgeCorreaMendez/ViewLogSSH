@@ -13,6 +13,7 @@ public class App {
         ChannelExec channel = null;
 
         try {
+
             System.out.print("Enter the address of the machine (default: 127.0.0.1): ");
             String hostAddress = ConsoleInput.getString("127.0.0.1");
 
@@ -39,25 +40,29 @@ public class App {
 
             channel = (ChannelExec) session.openChannel("exec");
 
-            System.out.print("Enter log file name: ");
-            String fileName = ConsoleInput.getString("");
+            boolean searchFile = true;
+            do {
+                System.out.print("Enter log file name: ");
+                String fileName = ConsoleInput.getString("");
 
-            channel.setCommand("cat /var/log/" + fileName + ".log");
+                channel.setCommand("cat /var/log/" + fileName + ".log");
 
-            ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
-            channel.setOutputStream(responseStream);
+                ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
+                channel.setOutputStream(responseStream);
 
-            channel.connect();
+                channel.connect();
 
-            while (channel.isConnected()) {
-                Thread.sleep(100);
-            }
+                while (channel.isConnected()) {
+                    Thread.sleep(100);
+                }
 
-            String responseString = new String(responseStream.toByteArray());
+                String responseString = new String(responseStream.toByteArray());
 
-            if (responseString.isEmpty()) System.out.println("No such file or directory");
-            else System.out.println(responseString);
+                if (responseString.isEmpty()) System.out.println("No such file or directory");
+                else System.out.println(responseString);
 
+                System.out.println("view the contents of another file (true) or exit (false)");
+            }while(searchFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         } finally {
