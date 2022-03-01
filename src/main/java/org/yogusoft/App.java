@@ -38,10 +38,10 @@ public class App {
             System.out.println("connected");
             System.out.println("-----------------------");
 
-            channel = (ChannelExec) session.openChannel("exec");
-
-            boolean searchFile = true;
+            boolean searchFile;
             do {
+                channel = (ChannelExec) session.openChannel("exec");
+
                 System.out.print("Enter log file name: ");
                 String fileName = ConsoleInput.getString("");
 
@@ -61,8 +61,9 @@ public class App {
                 if (responseString.isEmpty()) System.out.println("No such file or directory");
                 else System.out.println(responseString);
 
-                System.out.println("view the contents of another file (true) or exit (false)");
-            }while(searchFile);
+                System.out.print("view the contents of another file (true) or exit (false): ");
+                searchFile = ConsoleInput.getBoolean();
+            } while (searchFile);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         } finally {
